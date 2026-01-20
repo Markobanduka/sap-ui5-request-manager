@@ -97,7 +97,7 @@ sap.ui.define(
 
       _sendCreationNotification: function (oRequest) {
         var EmailService = sap.ui.require(
-          "ui5/requestmanagerapp/service/EmailService"
+          "ui5/requestmanager/service/EmailService"
         );
         if (EmailService && EmailService.isNotificationsEnabled()) {
           var sEmail = EmailService.getUserEmail();

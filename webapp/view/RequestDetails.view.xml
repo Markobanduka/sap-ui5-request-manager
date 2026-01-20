@@ -1,0 +1,141 @@
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    controllerName="ui5.requestmanager.controller.RequestDetails"
+    displayBlock="true">
+    
+    <Page title="{i18n>detailsPageTitle}" 
+          showNavButton="true" 
+          navButtonPress=".onNavBack">
+        
+        <headerContent>
+            <Button 
+                icon="sap-icon://edit"
+                tooltip="{i18n>btnEdit}"
+                press=".onEdit"
+                visible="{= !${viewModel>/editMode}}"/>
+            <Button 
+                icon="sap-icon://save"
+                tooltip="{i18n>btnSave}"
+                press=".onSave"
+                type="Emphasized"
+                visible="{viewModel>/editMode}"
+                class="sapUiTinyMarginBegin"/>
+            <Button 
+                icon="sap-icon://cancel"
+                tooltip="{i18n>btnCancel}"
+                press=".onCancelEdit"
+                visible="{viewModel>/editMode}"
+                class="sapUiTinyMarginBegin"/>
+        </headerContent>
+        
+        <content>
+            <l:VerticalLayout class="sapUiContentPadding" width="100%">
+                
+                <!-- View Mode -->
+                <f:SimpleForm 
+                    editable="false"
+                    layout="ResponsiveGridLayout"
+                    visible="{= !${viewModel>/editMode}}"
+                    class="sapUiSmallMarginBottom">
+                    
+                    <f:content>
+                        <Label text="{i18n>colId}"/>
+                        <Text text="{requestsModel>id}"/>
+                        
+                        <Label text="{i18n>colCategory}"/>
+                        <Text text="{requestsModel>category}"/>
+                        
+                        <Label text="{i18n>colPriority}"/>
+                        <ObjectStatus 
+                            text="{requestsModel>priority}"
+                            state="{
+                                path: 'requestsModel>priority',
+                                formatter: '.formatPriorityState'
+                            }"/>
+                        
+                        <Label text="{i18n>colStatus}"/>
+                        <ObjectStatus 
+                            text="{requestsModel>status}"
+                            state="{
+                                path: 'requestsModel>status',
+                                formatter: '.formatStatusState'
+                            }"/>
+                        
+                        <Label text="{i18n>colCreatedOn}"/>
+                        <Text text="{requestsModel>createdOn}"/>
+                        
+                        <Label text="{i18n>labelDescription}"/>
+                        <Text text="{requestsModel>description}" 
+                              class="sapUiTinyMarginTop"/>
+                    </f:content>
+                </f:SimpleForm>
+                
+                <!-- Edit Mode -->
+                <f:SimpleForm 
+                    editable="true"
+                    layout="ResponsiveGridLayout"
+                    visible="{viewModel>/editMode}"
+                    class="sapUiSmallMarginBottom">
+                    
+                    <f:content>
+                        <Label text="{i18n>colId}"/>
+                        <Text text="{requestsModel>id}"/>
+                        
+                        <Label text="{i18n>colCategory}"/>
+                        <Select 
+                            selectedKey="{requestsModel>category}"
+                            enabled="{viewModel>/editMode}">
+                            <core:Item key="Hardware" text="{i18n>categoryHardware}"/>
+                            <core:Item key="Software" text="{i18n>categorySoftware}"/>
+                            <core:Item key="Access" text="{i18n>categoryAccess}"/>
+                            <core:Item key="Network" text="{i18n>categoryNetwork}"/>
+                        </Select>
+                        
+                        <Label text="{i18n>colPriority}"/>
+                        <Select 
+                            selectedKey="{requestsModel>priority}"
+                            enabled="{viewModel>/editMode}">
+                            <core:Item key="Low" text="{i18n>priorityLow}"/>
+                            <core:Item key="Medium" text="{i18n>priorityMedium}"/>
+                            <core:Item key="High" text="{i18n>priorityHigh}"/>
+                            <core:Item key="Critical" text="{i18n>priorityCritical}"/>
+                        </Select>
+                        
+                        <Label text="{i18n>colStatus}"/>
+                        <Select 
+                            selectedKey="{requestsModel>status}"
+                            enabled="{viewModel>/editMode}">
+                            <core:Item key="Open" text="Open"/>
+                            <core:Item key="In Progress" text="In Progress"/>
+                            <core:Item key="Closed" text="Closed"/>
+                        </Select>
+                        
+                        <Label text="{i18n>colCreatedOn}"/>
+                        <Text text="{requestsModel>createdOn}"/>
+                        
+                        <Label text="{i18n>labelDescription}"/>
+                        <TextArea 
+                            value="{requestsModel>description}"
+                            rows="4"
+                            width="100%"
+                            enabled="{viewModel>/editMode}"/>
+                    </f:content>
+                </f:SimpleForm>
+                
+                <!-- Action Buttons -->
+                <l:HorizontalLayout class="sapUiSmallMarginTop">
+                    <Button 
+                        text="{i18n>btnDelete}"
+                        type="Reject"
+                        press=".onDelete"
+                        icon="sap-icon://delete"/>
+                </l:HorizontalLayout>
+                
+            </l:VerticalLayout>
+        </content>
+    </Page>
+</mvc:View>
