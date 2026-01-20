@@ -1,0 +1,345 @@
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    controllerName="ui5.requestmanager.controller.Statistics"
+    displayBlock="true">
+    
+    <Page title="{i18n>statsPageTitle}" showNavButton="true" navButtonPress=".onNavBack">
+        <content>
+            <ScrollContainer height="100%" vertical="true" focusable="true">
+                <l:VerticalLayout class="sapUiContentPadding" width="100%">
+                    
+                    <!-- Title and Intro (like Dashboard) -->
+                    <Title text="{i18n>statsOverview}" level="H2" />
+                    <Text text="{i18n>statsOverviewIntro}" class="sapUiSmallMarginBottom" />
+                    
+                    <!-- Stats Cards - Using Dashboard Tile Styling -->
+                    <l:HorizontalLayout allowWrapping="true" class="sapUiSmallMarginTop">
+                        
+                        <!-- Total Requests -->
+                        <GenericTile
+                            header="{i18n>statsTotalRequests}"
+                            subheader="All time"
+                            press=".onTotalRequestsPress"
+                            class="sapUiTinyMargin">
+                            <TileContent>
+                                <NumericContent 
+                                    value="{statsModel>/totalRequests}" 
+                                    valueColor="Good"
+                                    withMargin="false" />
+                            </TileContent>
+                        </GenericTile>
+                        
+                        <!-- Open Requests -->
+                        <GenericTile
+                            header="{i18n>statsOpenRequests}"
+                            subheader="Require attention"
+                            press=".onOpenRequestsPress"
+                            class="sapUiTinyMargin">
+                            <TileContent>
+                                <NumericContent 
+                                    value="{statsModel>/openRequests}" 
+                                    valueColor="Error"
+                                    withMargin="false" />
+                            </TileContent>
+                        </GenericTile>
+                        
+                        <!-- In Progress -->
+                        <GenericTile
+                            header="{i18n>statsInProgress}"
+                            subheader="Being worked on"
+                            press=".onInProgressPress"
+                            class="sapUiTinyMargin">
+                            <TileContent>
+                                <NumericContent 
+                                    value="{statsModel>/inProgress}" 
+                                    valueColor="Critical"
+                                    withMargin="false" />
+                            </TileContent>
+                        </GenericTile>
+                        
+                        <!-- Closed -->
+                        <GenericTile
+                            header="{i18n>statsClosedRequests}"
+                            subheader="Completed"
+                            press=".onClosedRequestsPress"
+                            class="sapUiTinyMargin">
+                            <TileContent>
+                                <NumericContent 
+                                    value="{statsModel>/closedRequests}" 
+                                    valueColor="Good"
+                                    withMargin="false" />
+                            </TileContent>
+                        </GenericTile>
+                        
+                        <!-- Average Resolution Time -->
+                        <GenericTile
+                            header="Average Resolution"
+                            subheader="Days to close"
+                            press=".onAvgResolutionPress"
+                            class="sapUiTinyMargin">
+                            <TileContent>
+                                <NumericContent 
+                                    value="{statsModel>/avgResolutionDays}" 
+                                    valueColor="Neutral"
+                                    withMargin="false" />
+                            </TileContent>
+                        </GenericTile>
+                        
+                        <!-- Satisfaction Rate -->
+                        <GenericTile
+                            header="Satisfaction Rate"
+                            subheader="User feedback"
+                            press=".onSatisfactionPress"
+                            class="sapUiTinyMargin">
+                            <TileContent>
+                                <NumericContent 
+                                    value="{statsModel>/satisfactionRate}" 
+                                    valueColor="Good"
+                                    scale="%"
+                                    withMargin="false" />
+                            </TileContent>
+                        </GenericTile>
+                        
+                    </l:HorizontalLayout>
+                    
+                    <!-- Status Distribution -->
+                    <Panel headerText="{i18n>statsStatusDistribution}" expandable="true" expanded="true" class="sapUiSmallMarginTop">
+                        <content>
+                            <l:VerticalLayout class="sapUiSmallMargin">
+                                <!-- Open Status -->
+                                <HBox justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                                    <HBox>
+                                        <ObjectStatus text="Open" state="Warning" class="sapUiTinyMarginEnd"/>
+                                        <Text text="{statsModel>/openRequests} requests"/>
+                                    </HBox>
+                                    <ProgressIndicator 
+                                        percentValue="{
+                                            path: 'statsModel>/openRequests',
+                                            formatter: '.formatPercentage'
+                                        }"
+                                        displayValue="{
+                                            path: 'statsModel>/openRequests',
+                                            formatter: '.formatPercentage'
+                                        }%"
+                                        showValue="true"
+                                        state="Warning"
+                                        width="150px"/>
+                                </HBox>
+                                
+                                <!-- In Progress -->
+                                <HBox justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                                    <HBox>
+                                        <ObjectStatus text="In Progress" state="Information" class="sapUiTinyMarginEnd"/>
+                                        <Text text="{statsModel>/inProgress} requests"/>
+                                    </HBox>
+                                    <ProgressIndicator 
+                                        percentValue="{
+                                            path: 'statsModel>/inProgress',
+                                            formatter: '.formatPercentage'
+                                        }"
+                                        displayValue="{
+                                            path: 'statsModel>/inProgress',
+                                            formatter: '.formatPercentage'
+                                        }%"
+                                        showValue="true"
+                                        state="Information"
+                                        width="150px"/>
+                                </HBox>
+                                
+                                <!-- Closed -->
+                                <HBox justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                                    <HBox>
+                                        <ObjectStatus text="Closed" state="Success" class="sapUiTinyMarginEnd"/>
+                                        <Text text="{statsModel>/closedRequests} requests"/>
+                                    </HBox>
+                                    <ProgressIndicator 
+                                        percentValue="{
+                                            path: 'statsModel>/closedRequests',
+                                            formatter: '.formatPercentage'
+                                        }"
+                                        displayValue="{
+                                            path: 'statsModel>/closedRequests',
+                                            formatter: '.formatPercentage'
+                                        }%"
+                                        showValue="true"
+                                        state="Success"
+                                        width="150px"/>
+                                </HBox>
+                            </l:VerticalLayout>
+                        </content>
+                    </Panel>
+                    
+                    <!-- Category Distribution -->
+                    <Panel headerText="{i18n>statsCategoryDistribution}" expandable="true" expanded="true">
+                        <content>
+                            <l:VerticalLayout class="sapUiSmallMargin">
+                                <List items="{statsModel>/categoryData}">
+                                    <items>
+                                        <CustomListItem>
+                                            <HBox justifyContent="SpaceBetween" class="sapUiSmallMargin">
+                                                <HBox>
+                                                    <ObjectStatus text="{statsModel>category}" 
+                                                                state="{
+                                                                    path: 'statsModel>category',
+                                                                    formatter: '.formatCategoryState'
+                                                                }"
+                                                                class="sapUiTinyMarginEnd"/>
+                                                    <Text text="{statsModel>count} requests"/>
+                                                </HBox>
+                                                <HBox alignItems="Center">
+                                                    <Text text="{statsModel>percentage}%" class="sapUiTinyMarginEnd"/>
+                                                    <ProgressIndicator 
+                                                        percentValue="{statsModel>percentage}"
+                                                        showValue="false"
+                                                        state="{
+                                                            path: 'statsModel>category',
+                                                            formatter: '.formatCategoryState'
+                                                        }"
+                                                        width="100px"/>
+                                                </HBox>
+                                            </HBox>
+                                        </CustomListItem>
+                                    </items>
+                                </List>
+                            </l:VerticalLayout>
+                        </content>
+                    </Panel>
+                    
+                    <!-- Priority Distribution -->
+                    <Panel headerText="{i18n>statsPriorityDistribution}" expandable="true" expanded="true">
+                        <content>
+                            <l:VerticalLayout class="sapUiSmallMargin">
+                                <!-- Critical -->
+                                <HBox justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                                    <HBox>
+                                        <ObjectStatus text="Critical" state="Error" class="sapUiTinyMarginEnd"/>
+                                        <Text text="{statsModel>/criticalCount} requests"/>
+                                    </HBox>
+                                    <HBox alignItems="Center">
+                                        <Text text="{statsModel>/criticalPercentage}%" class="sapUiTinyMarginEnd"/>
+                                        <ProgressIndicator 
+                                            percentValue="{statsModel>/criticalPercentage}"
+                                            showValue="false"
+                                            state="Error"
+                                            width="100px"/>
+                                    </HBox>
+                                </HBox>
+                                
+                                <!-- High -->
+                                <HBox justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                                    <HBox>
+                                        <ObjectStatus text="High" state="Error" class="sapUiTinyMarginEnd"/>
+                                        <Text text="{statsModel>/highCount} requests"/>
+                                    </HBox>
+                                    <HBox alignItems="Center">
+                                        <Text text="{statsModel>/highPercentage}%" class="sapUiTinyMarginEnd"/>
+                                        <ProgressIndicator 
+                                            percentValue="{statsModel>/highPercentage}"
+                                            showValue="false"
+                                            state="Error"
+                                            width="100px"/>
+                                    </HBox>
+                                </HBox>
+                                
+                                <!-- Medium -->
+                                <HBox justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                                    <HBox>
+                                        <ObjectStatus text="Medium" state="Warning" class="sapUiTinyMarginEnd"/>
+                                        <Text text="{statsModel>/mediumCount} requests"/>
+                                    </HBox>
+                                    <HBox alignItems="Center">
+                                        <Text text="{statsModel>/mediumPercentage}%" class="sapUiTinyMarginEnd"/>
+                                        <ProgressIndicator 
+                                            percentValue="{statsModel>/mediumPercentage}"
+                                            showValue="false"
+                                            state="Warning"
+                                            width="100px"/>
+                                    </HBox>
+                                </HBox>
+                                
+                                <!-- Low -->
+                                <HBox justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                                    <HBox>
+                                        <ObjectStatus text="Low" state="Success" class="sapUiTinyMarginEnd"/>
+                                        <Text text="{statsModel>/lowCount} requests"/>
+                                    </HBox>
+                                    <HBox alignItems="Center">
+                                        <Text text="{statsModel>/lowPercentage}%" class="sapUiTinyMarginEnd"/>
+                                        <ProgressIndicator 
+                                            percentValue="{statsModel>/lowPercentage}"
+                                            showValue="false"
+                                            state="Success"
+                                            width="100px"/>
+                                    </HBox>
+                                </HBox>
+                            </l:VerticalLayout>
+                        </content>
+                    </Panel>
+                    
+                    <!-- Recent Activity -->
+                    <Panel headerText="{i18n>statsRecentActivity}" expandable="true" expanded="true">
+                        <content>
+                            <List items="{statsModel>/recentActivity}">
+                                <items>
+                                    <CustomListItem>
+                                        <HBox class="sapUiSmallMargin">
+                                            <VBox class="sapUiSmallMarginBegin" width="100%">
+                                                <HBox justifyContent="SpaceBetween" alignItems="Center">
+                                                    <Title text="{statsModel>title}" level="H3"/>
+                                                    <ObjectStatus text="{statsModel>status}" 
+                                                                state="{statsModel>statusState}"
+                                                                class="sapUiTinyMarginEnd"/>
+                                                </HBox>
+                                                <Text text="{statsModel>description}" 
+                                                      class="sapUiTinyMarginTop sapUiSmallMarginBottom"/>
+                                                <HBox alignItems="Center">
+                                                    <ObjectStatus text="{statsModel>category}" 
+                                                                state="{
+                                                                    path: 'statsModel>category',
+                                                                    formatter: '.formatCategoryState'
+                                                                }"
+                                                                class="sapUiTinyMarginEnd"/>
+                                                    <Text text="•" class="sapUiTinyMarginEnd"/>
+                                                    <ObjectStatus text="{statsModel>priority}" 
+                                                                state="{
+                                                                    path: 'statsModel>priority',
+                                                                    formatter: '.formatPriorityState'
+                                                                }"
+                                                                class="sapUiTinyMarginEnd"/>
+                                                    <Text text="•" class="sapUiTinyMarginEnd"/>
+                                                    <core:Icon src="sap-icon://history" 
+                                                             class="sapUiTinyMarginEnd"
+                                                             size="0.75rem"/>
+                                                    <Text text="{statsModel>time}" 
+                                                          class="sapUiTinyMarginEnd"/>
+                                                </HBox>
+                                            </VBox>
+                                        </HBox>
+                                    </CustomListItem>
+                                </items>
+                            </List>
+                        </content>
+                    </Panel>
+                    
+                </l:VerticalLayout>
+            </ScrollContainer>
+        </content>
+        
+        <footer>
+            <OverflowToolbar>
+                <ToolbarSpacer/>
+                <Button text="{i18n>btnRefresh}" 
+                        icon="sap-icon://refresh" 
+                        press=".onRefresh"
+                        type="Transparent"/>
+                <Button text="{i18n>btnExportStats}" 
+                        icon="sap-icon://excel-attachment" 
+                        press=".onExportStats"
+                        type="Emphasized"/>
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

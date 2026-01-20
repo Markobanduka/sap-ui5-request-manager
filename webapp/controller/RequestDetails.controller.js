@@ -6,7 +6,7 @@ sap.ui.define([
 ], function(Controller, MessageBox, MessageToast, JSONModel) {
     "use strict";
 
-    return Controller.extend("ui5.requestmanagerapp.controller.RequestDetails", {
+    return Controller.extend("ui5.requestmanager.controller.RequestDetails", {
         onInit: function() {
             console.log("RequestDetails controller initialized");
             

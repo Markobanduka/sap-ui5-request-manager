@@ -18,7 +18,7 @@ sap.ui.define([
         },
 
         onHelp: function() {
-            var oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            const oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
             MessageBox.information(oBundle.getText("helpMessage"));
         },
         onNavigateToStats: function() {

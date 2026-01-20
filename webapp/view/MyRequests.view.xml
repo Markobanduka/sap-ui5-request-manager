@@ -37,7 +37,7 @@
               <Title text="{i18n>myRequestsPageTitle}" level="H2"/>
               <ToolbarSpacer/>
                 <Select
-                  selectedKey="{viewModel>statusFilter}"
+                  selectedKey="{viewModel>/statusFilter}"
                   change=".onStatusFilterChange"
                   width="10rem"
                   class="sapUiSmallMarginEnd"

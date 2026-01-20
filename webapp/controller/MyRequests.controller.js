@@ -8,12 +8,12 @@ sap.ui.define([
 ], function(Controller, Filter, FilterOperator, MessageToast, JSONModel, MessageBox) {
     "use strict";
 
-    return Controller.extend("ui5.requestmanagerapp.controller.MyRequests", {
+    return Controller.extend("ui5.requestmanager.controller.MyRequests", {
         onInit: function() {
             console.log("MyRequests controller initialized");
             
             // Create view model for filters
-            var oViewModel = new JSONModel({
+            const oViewModel = new JSONModel({
                 statusFilter: "",
                 searchFilter: ""
             });
@@ -28,35 +28,35 @@ sap.ui.define([
         },
 
         onSearch: function(oEvent) {
-            var sQuery = oEvent.getSource().getValue() || "";
+            const sQuery = oEvent.getSource().getValue() || "";
             sQuery = sQuery.trim();
             
-            var oViewModel = this.getView().getModel("viewModel");
+            const oViewModel = this.getView().getModel("viewModel");
             oViewModel.setProperty("/searchFilter", sQuery);
             
             this._applyCombinedFilters();
         },
 
         onStatusFilterChange: function(oEvent) {
-            var sStatus = oEvent.getSource().getSelectedKey();
-            var oViewModel = this.getView().getModel("viewModel");
+            const sStatus = oEvent.getSource().getSelectedKey();
+            const oViewModel = this.getView().getModel("viewModel");
             oViewModel.setProperty("/statusFilter", sStatus);
             
             this._applyCombinedFilters();
         },
 
         _applyCombinedFilters: function() {
-            var oTable = this.byId("requestsTable");
+            const oTable = this.byId("requestsTable");
             if (!oTable) return;
             
-            var oBinding = oTable.getBinding("items");
+            const oBinding = oTable.getBinding("items");
             if (!oBinding) return;
             
-            var oViewModel = this.getView().getModel("viewModel");
-            var sStatusFilter = oViewModel.getProperty("/statusFilter");
-            var sSearchFilter = oViewModel.getProperty("/searchFilter");
+            const oViewModel = this.getView().getModel("viewModel");
+            const sStatusFilter = oViewModel.getProperty("/statusFilter");
+            const sSearchFilter = oViewModel.getProperty("/searchFilter");
             
-            var aFilters = [];
+            const aFilters = [];
             
             // Apply status filter
             if (sStatusFilter) {
@@ -65,7 +65,7 @@ sap.ui.define([
             
             // Apply search filter
             if (sSearchFilter) {
-                var aSearchFilters = [
+                const aSearchFilters = [
                     new Filter("id", FilterOperator.Contains, sSearchFilter),
                     new Filter("category", FilterOperator.Contains, sSearchFilter),
                     new Filter("description", FilterOperator.Contains, sSearchFilter),
@@ -92,23 +92,23 @@ sap.ui.define([
         },
 
         _updateItemCount: function() {
-            var oTable = this.byId("requestsTable");
+            const oTable = this.byId("requestsTable");
             if (!oTable) return;
             
-            var oBinding = oTable.getBinding("items");
+            const oBinding = oTable.getBinding("items");
             if (!oBinding) return;
             
             // Get filtered length
-            var aContexts = oBinding.getCurrentContexts();
-            var iFilteredCount = aContexts ? aContexts.length : 0;
+            const aContexts = oBinding.getCurrentContexts();
+            const iFilteredCount = aContexts ? aContexts.length : 0;
             
             // Get total length
-            var oModel = this.getOwnerComponent().getModel("requestsModel");
-            var aAllRequests = oModel.getProperty("/requests") || [];
-            var iTotalCount = aAllRequests.length;
+            const oModel = this.getOwnerComponent().getModel("requestsModel");
+            const aAllRequests = oModel.getProperty("/requests") || [];
+            const iTotalCount = aAllRequests.length;
             
             // Update label if needed (you might want to bind this to a model)
-            var oLabel = this.byId("itemCountLabel");
+            const oLabel = this.byId("itemCountLabel");
             if (oLabel) {
                 if (iFilteredCount === iTotalCount) {
                     oLabel.setText(this.formatItemCount(aAllRequests));
@@ -119,10 +119,10 @@ sap.ui.define([
         },
 
         onSelectionChange: function(oEvent) {
-            var oSelectedItem = oEvent.getParameter("listItem");
+            const oSelectedItem = oEvent.getParameter("listItem");
             if (oSelectedItem) {
-                var oContext = oSelectedItem.getBindingContext("requestsModel");
-                var oRequest = oContext.getObject();
+                const oContext = oSelectedItem.getBindingContext("requestsModel");
+                const oRequest = oContext.getObject();
                 
                 // Navigate to details view
                 this.getOwnerComponent().getRouter().navTo("details", {
@@ -132,9 +132,9 @@ sap.ui.define([
         },
 
         onExport: function() {
-            var oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
-            var oModel = this.getOwnerComponent().getModel("requestsModel");
-            var aRequests = oModel.getProperty("/requests") || [];
+            const oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            const oModel = this.getOwnerComponent().getModel("requestsModel");
+            const aRequests = oModel.getProperty("/requests") || [];
             
             if (aRequests.length === 0) {
                 MessageToast.show(oBundle.getText("msgExportEmpty"));
@@ -142,10 +142,10 @@ sap.ui.define([
             }
             
             // Create CSV content
-            var sCsv = this._convertToCSV(aRequests);
+            const sCsv = this._convertToCSV(aRequests);
             
             // Create download link
-            var sFileName = oBundle.getText("exportFileName", [new Date().toISOString().slice(0, 10)]);
+            const sFileName = oBundle.getText("exportFileName", [new Date().toISOString().slice(0, 10)]);
             this._downloadCSV(sCsv, sFileName);
             
             MessageToast.show(oBundle.getText("msgExportSuccess", [aRequests.length]));
@@ -153,12 +153,12 @@ sap.ui.define([
 
         _convertToCSV: function(aRequests) {
             // CSV headers
-            var aHeaders = ["ID", "Category", "Priority", "Status", "Created On", "Description"];
-            var sCsv = aHeaders.join(",") + "\n";
+            const aHeaders = ["ID", "Category", "Priority", "Status", "Created On", "Description"];
+            const sCsv = aHeaders.join(",") + "\n";
             
             // Add data rows
             aRequests.forEach(function(oRequest) {
-                var aRow = [
+                const aRow = [
                     '"' + (oRequest.id || "") + '"',
                     '"' + (oRequest.category || "") + '"',
                     '"' + (oRequest.priority || "") + '"',
@@ -173,14 +173,14 @@ sap.ui.define([
         },
 
         _downloadCSV: function(sCsv, sFileName) {
-            var sBlob = new Blob(["\ufeff", sCsv], { type: "text/csv;charset=utf-8;" });
+            const sBlob = new Blob(["\ufeff", sCsv], { type: "text/csv;charset=utf-8;" });
             
             if (navigator.msSaveBlob) {
                 navigator.msSaveBlob(sBlob, sFileName);
             } else {
-                var sLink = document.createElement("a");
+                const sLink = document.createElement("a");
                 if (sLink.download !== undefined) {
-                    var sUrl = URL.createObjectURL(sBlob);
+                    const sUrl = URL.createObjectURL(sBlob);
                     sLink.setAttribute("href", sUrl);
                     sLink.setAttribute("download", sFileName);
                     sLink.style.visibility = "hidden";
@@ -193,9 +193,9 @@ sap.ui.define([
 
         // Quick Edit action
         onQuickEdit: function(oEvent) {
-            var oButton = oEvent.getSource();
-            var oContext = oButton.getBindingContext("requestsModel");
-            var oRequest = oContext.getObject();
+            const oButton = oEvent.getSource();
+            const oContext = oButton.getBindingContext("requestsModel");
+            const oRequest = oContext.getObject();
             
             // Navigate to details
             this.getOwnerComponent().getRouter().navTo("details", {
@@ -205,12 +205,12 @@ sap.ui.define([
 
         // Quick Delete action
         onQuickDelete: function(oEvent) {
-            var oButton = oEvent.getSource();
-            var oContext = oButton.getBindingContext("requestsModel");
-            var oRequest = oContext.getObject();
-            var that = this;
+            const oButton = oEvent.getSource();
+            const oContext = oButton.getBindingContext("requestsModel");
+            const oRequest = oContext.getObject();
+            const that = this;
             
-            var oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            const oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
             
             MessageBox.confirm(oBundle.getText("msgConfirmDelete"), {
                 title: oBundle.getText("titleConfirm"),
@@ -223,11 +223,11 @@ sap.ui.define([
         },
 
         _deleteRequestFromContext: function(oContext) {
-            var oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
-            var oModel = oContext.getModel();
-            var aRequests = oModel.getProperty("/requests");
-            var sPath = oContext.getPath();
-            var nIndex = parseInt(sPath.split("/").pop());
+            const oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            const oModel = oContext.getModel();
+            const aRequests = oModel.getProperty("/requests");
+            const sPath = oContext.getPath();
+            const nIndex = parseInt(sPath.split("/").pop());
             
             // Remove from array
             aRequests.splice(nIndex, 1);
@@ -277,20 +277,20 @@ sap.ui.define([
         
         // Debug function to check filters
         debugFilters: function() {
-            var oViewModel = this.getView().getModel("viewModel");
+            const oViewModel = this.getView().getModel("viewModel");
             console.log("Current filters:", {
                 statusFilter: oViewModel.getProperty("/statusFilter"),
                 searchFilter: oViewModel.getProperty("/searchFilter")
             });
             
-            var oTable = this.byId("requestsTable");
+            const oTable = this.byId("requestsTable");
             if (oTable) {
-                var oBinding = oTable.getBinding("items");
+                const oBinding = oTable.getBinding("items");
                 if (oBinding) {
-                    var aFilters = oBinding.getFilters();
+                    const aFilters = oBinding.getFilters();
                     console.log("Applied filters:", aFilters);
                     
-                    var aContexts = oBinding.getCurrentContexts();
+                    const aContexts = oBinding.getCurrentContexts();
                     console.log("Filtered items:", aContexts ? aContexts.length : 0);
                 }
             }

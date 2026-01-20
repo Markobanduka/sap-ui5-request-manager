@@ -1,18 +1,15 @@
 sap.ui.define([
     "sap/ui/core/UIComponent",
-    "sap/ui/model/json/JSONModel",
-], (UIComponent, JSONModel) => {
+    "sap/ui/model/json/JSONModel"
+], function(UIComponent, JSONModel) {
     "use strict";
 
     return UIComponent.extend("ui5.requestmanager.Component", {
         metadata: {
-            manifest: "json",
-            interfaces: [
-                "sap.ui.core.IAsyncContentCreation"
-            ]
+            manifest: "json"
         },
 
-       init: function() {
+        init: function() {
             UIComponent.prototype.init.apply(this, arguments);
             
             console.log("✅ App initialized");
@@ -31,7 +28,7 @@ sap.ui.define([
                         category: "Hardware",
                         priority: "High",
                         status: "Open",
-                        createdOn: "2024-01-15",
+                        createdOn: "2026-01-20",
                         description: "Laptop not turning on"
                     },
                     {
@@ -39,7 +36,7 @@ sap.ui.define([
                         category: "Software",
                         priority: "Medium",
                         status: "In Progress",
-                        createdOn: "2024-01-14",
+                        createdOn: "2026-01-19",
                         description: "Need Adobe Acrobat installed"
                     }
                 ]

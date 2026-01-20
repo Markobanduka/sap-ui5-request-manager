@@ -23,23 +23,23 @@ sap.ui.define(
       },
 
       onSubmit: function () {
-        var oBundle = this.getOwnerComponent()
+        const oBundle = this.getOwnerComponent()
           .getModel("i18n")
           .getResourceBundle();
 
         // Get form values
-        var oCategory = this.byId("categorySelect");
-        var oPriority = this.byId("prioritySelect");
-        var oDesc = this.byId("descArea");
+        const oCategory = this.byId("categorySelect");
+        const oPriority = this.byId("prioritySelect");
+        const oDesc = this.byId("descArea");
 
         if (!oCategory || !oPriority || !oDesc) {
           MessageBox.error("Please reload the page");
           return;
         }
 
-        var sCategory = oCategory.getSelectedKey();
-        var sPriority = oPriority.getSelectedKey();
-        var sDesc = oDesc.getValue().trim();
+        const sCategory = oCategory.getSelectedKey();
+        const sPriority = oPriority.getSelectedKey();
+        const sDesc = oDesc.getValue().trim();
 
         if (!sCategory || !sPriority || !sDesc) {
           MessageBox.warning(oBundle.getText("msgFillRequired"));
@@ -47,8 +47,8 @@ sap.ui.define(
         }
 
         // Get or create model
-        var oComponent = this.getOwnerComponent();
-        var oRequestsModel = oComponent.getModel("requestsModel");
+        const oComponent = this.getOwnerComponent();
+        const oRequestsModel = oComponent.getModel("requestsModel");
 
         if (!oRequestsModel) {
           oRequestsModel = new JSONModel({ requests: [] });
@@ -56,10 +56,10 @@ sap.ui.define(
         }
 
         // Get current requests
-        var aRequests = oRequestsModel.getProperty("/requests") || [];
+        const aRequests = oRequestsModel.getProperty("/requests") || [];
 
         // Create new request
-        var newRequest = {
+        const newRequest = {
           id: "REQ-" + Date.now(),
           category: sCategory,
           priority: sPriority,
@@ -89,18 +89,18 @@ sap.ui.define(
         this._resetForm();
 
         // Navigate back to dashboard after 2 seconds
-        var that = this;
+        const that = this;
         setTimeout(function () {
           that.getOwnerComponent().getRouter().navTo("dashboard");
         }, 2000);
       },
 
       _sendCreationNotification: function (oRequest) {
-        var EmailService = sap.ui.require(
+        const EmailService = sap.ui.require(
           "ui5/requestmanager/service/EmailService"
         );
         if (EmailService && EmailService.isNotificationsEnabled()) {
-          var sEmail = EmailService.getUserEmail();
+          const sEmail = EmailService.getUserEmail();
           EmailService.notifyRequestCreated(oRequest, sEmail)
             .then(function (response) {
               console.log("Creation notification sent:", response);
@@ -112,9 +112,9 @@ sap.ui.define(
       },
 
       _resetForm: function () {
-        var oCategory = this.byId("categorySelect");
-        var oPriority = this.byId("prioritySelect");
-        var oDesc = this.byId("descArea");
+        const oCategory = this.byId("categorySelect");
+        const oPriority = this.byId("prioritySelect");
+        const oDesc = this.byId("descArea");
 
         if (oCategory) oCategory.setSelectedKey("");
         if (oPriority) oPriority.setSelectedKey("");
