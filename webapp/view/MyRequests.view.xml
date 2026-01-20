@@ -3,6 +3,7 @@
   xmlns="sap.m"
   xmlns:l="sap.ui.layout"
   xmlns:core="sap.ui.core"
+  controllerName="ui5.requestmanager.controller.MyRequests"
   displayBlock="true">
 
   <Page title="{i18n>myRequestsPageTitle}" showNavButton="true" navButtonPress=".onNavBack">
@@ -19,7 +20,7 @@
           <Table
           id="requestsTable"
           items="{
-            path: 'requestModel>/requests',
+            path: 'requestsModel>/requests',
             sorter: {
               path: 'createdOn',
               descending: true
