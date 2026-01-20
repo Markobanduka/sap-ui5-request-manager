@@ -1,0 +1,126 @@
+<mvc:View
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:l="sap.ui.layout"
+  xmlns:core="sap.ui.core"
+  displayBlock="true">
+
+  <Page title="{i18n>myRequestsPageTitle}" showNavButton="true" navButtonPress=".onNavBack">
+    <content>
+      <l:VerticalLayout class="sapUiContentPadding" width="100%">
+        <SearchField
+          id="searchField"
+          width="100%"
+          placeholder="{i18n>searchPlaceholder}"
+          liveChange=".onSearch"
+          class="sapUiSmallMarginBottom"
+          showRefreshButton="true"
+          />
+          <Table
+          id="requestsTable"
+          items="{
+            path: 'requestModel>/requests',
+            sorter: {
+              path: 'createdOn',
+              descending: true
+              }
+            }"
+            growing="true"
+            growingThreshold="10"
+            width="auto"
+            mode="SingleSelectMaster"
+            selectionChange=".onSelectionChange"
+          >
+          <headerToolbar>
+            <OverflowToolbar>
+              <Title text="{i18n>myRequestsPageTitle}" level="H2"/>
+              <ToolbarSpacer/>
+                <Select
+                  selectedKey="{viewModel>statusFilter}"
+                  change=".onStatusFilterChange"
+                  width="10rem"
+                  class="sapUiSmallMarginEnd"
+      >
+                    <core:Item key="" text="All Status" />
+                    <core:Item key="Open" text="Open" />
+                    <core:Item key="In Progress" text="In Progress" />
+                    <core:Item key="Closed" text="Closed" />
+                </Select>
+                <Button
+                    icon="sap-icon://download"
+                    tooltip="{i18n>btnExport}"
+                    press=".onExport"
+                    type="Transparent" />
+                <Label
+                    id="itemCountLabel"
+                                text="{
+                                    parts: [
+                                        {path: 'requestsModel>/requests'}
+                                    ],
+                                    formatter: '.formatItemCount'
+                                }" />
+            </OverflowToolbar>
+          </headerToolbar>
+            <columns>
+                        <Column width="12em">
+                            <Text text="{i18n>colId}" />
+                        </Column>
+                        <Column width="10em">
+                            <Text text="{i18n>colCategory}" />
+                        </Column>
+                        <Column width="8em">
+                            <Text text="{i18n>colPriority}" />
+                        </Column>
+                        <Column width="8em">
+                            <Text text="{i18n>colStatus}" />
+                        </Column>
+                        <Column width="10em">
+                            <Text text="{i18n>colCreatedOn}" />
+                        </Column>
+                        <Column width="6em" hAlign="Center">
+                            <Text text="Actions" />
+                        </Column>
+                    </columns>
+                      <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{requestsModel>id}" />
+                                <Text text="{requestsModel>category}" />
+                                <ObjectStatus
+                                    text="{requestsModel>priority}"
+                                    state="{
+                                        path: 'requestsModel>priority',
+                                        formatter: '.formatPriorityState'
+                                    }"
+                                    icon="{
+                                        path: 'requestsModel>priority',
+                                        formatter: '.formatPriorityIcon'
+                                    }" />
+                                <ObjectStatus
+                                    text="{requestsModel>status}"
+                                    state="{
+                                        path: 'requestsModel>status',
+                                        formatter: '.formatStatusState'
+                                    }" />
+                                <Text text="{requestsModel>createdOn}" />
+                                <l:HorizontalLayout>
+                                    <Button
+                                        icon="sap-icon://edit"
+                                        tooltip="Edit"
+                                        press=".onQuickEdit"
+                                        type="Transparent"
+                                        class="sapUiTinyMarginEnd" />
+                                    <Button
+                                        icon="sap-icon://delete"
+                                        tooltip="Delete"
+                                        press=".onQuickDelete"
+                                        type="Transparent" />
+                                </l:HorizontalLayout>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+          </Table>
+      </l:VerticalLayout>
+    </content>
+  </Page>
+</mvc:View>
