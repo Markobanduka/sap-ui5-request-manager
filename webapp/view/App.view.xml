@@ -1,0 +1,29 @@
+<!-- <mvc:View controllerName="ui5.requestmanager.controller.App"
+    displayBlock="true"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <App id="app">
+    </App>
+</mvc:View> -->
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    controllerName="ui5.requestmanager.controller.App"
+    displayBlock="true">
+    
+    <Shell>
+        <App id="app">
+            <pages>
+                <!-- Initial loading page -->
+                <Page>
+                    <content>
+                        <VBox justifyContent="Center" alignItems="Center" height="100%">
+                            <BusyIndicator size="2rem" class="sapUiSmallMargin"/>
+                            <Text text="Loading Request Manager..." class="sapUiSmallMargin"/>
+                        </VBox>
+                    </content>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>
