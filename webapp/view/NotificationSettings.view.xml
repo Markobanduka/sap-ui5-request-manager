@@ -1,0 +1,117 @@
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    controllerName="ui5.requestmanager.controller.NotificationSettings"
+    displayBlock="true">
+    
+    <Page title="{i18n>notifSettingsTitle}" showNavButton="true" navButtonPress=".onNavBack">
+        <content>
+            <l:VerticalLayout class="sapUiContentPadding" width="100%">
+                
+                <Panel headerText="{i18n>notifEmailSettings}" expandable="true" expanded="true">
+                    <content>
+                        <f:SimpleForm editable="true" layout="ResponsiveGridLayout">
+                            <f:content>
+                                <Label text="{i18n>notifEnableEmail}"/>
+                                <Switch state="{settingsModel>/emailEnabled}" 
+                                        change=".onEmailToggle"/>
+                                
+                                <Label text="{i18n>notifEmailAddress}" required="true"/>
+                                <Input value="{settingsModel>/emailAddress}" 
+                                       type="Email"
+                                       enabled="{settingsModel>/emailEnabled}"
+                                       placeholder="your.email@company.com"/>
+                                
+                                <Label text="{i18n>notifEmailFrequency}"/>
+                                <Select selectedKey="{settingsModel>/emailFrequency}"
+                                        enabled="{settingsModel>/emailEnabled}">
+                                    <core:Item key="immediate" text="{i18n>notifImmediate}"/>
+                                    <core:Item key="daily" text="{i18n>notifDailyDigest}"/>
+                                    <core:Item key="weekly" text="{i18n>notifWeeklySummary}"/>
+                                </Select>
+                            </f:content>
+                        </f:SimpleForm>
+                    </content>
+                </Panel>
+                
+                <Panel headerText="{i18n>notifEventTypes}" expandable="true" expanded="true">
+                    <content>
+                        <List>
+                            <items>
+                                <CustomListItem>
+                                    <HBox class="sapUiSmallMargin">
+                                        <VBox class="sapUiSmallMarginBegin" width="100%">
+                                            <Title text="{i18n>notifNewRequest}" level="H3"/>
+                                            <Text text="{i18n>notifNewRequestDesc}"/>
+                                            <HBox class="sapUiTinyMarginTop">
+                                                <Switch state="{settingsModel>/notifyNewRequest}" 
+                                                        enabled="{settingsModel>/emailEnabled}"
+                                                        class="sapUiTinyMarginEnd"/>
+                                                <Text text="{i18n>notifWhenEnabled}"/>
+                                            </HBox>
+                                        </VBox>
+                                    </HBox>
+                                </CustomListItem>
+                                
+                                <CustomListItem>
+                                    <HBox class="sapUiSmallMargin">
+                                        <VBox class="sapUiSmallMarginBegin" width="100%">
+                                            <Title text="{i18n>notifStatusChange}" level="H3"/>
+                                            <Text text="{i18n>notifStatusChangeDesc}"/>
+                                            <HBox class="sapUiTinyMarginTop">
+                                                <Switch state="{settingsModel>/notifyStatusChange}" 
+                                                        enabled="{settingsModel>/emailEnabled}"
+                                                        class="sapUiTinyMarginEnd"/>
+                                                <Text text="{i18n>notifWhenEnabled}"/>
+                                            </HBox>
+                                        </VBox>
+                                    </HBox>
+                                </CustomListItem>
+                                
+                                <CustomListItem>
+                                    <HBox class="sapUiSmallMargin">
+                                        <VBox class="sapUiSmallMarginBegin" width="100%">
+                                            <Title text="{i18n>notifAssignment}" level="H3"/>
+                                            <Text text="{i18n>notifAssignmentDesc}"/>
+                                            <HBox class="sapUiTinyMarginTop">
+                                                <Switch state="{settingsModel>/notifyAssignment}" 
+                                                        enabled="{settingsModel>/emailEnabled}"
+                                                        class="sapUiTinyMarginEnd"/>
+                                                <Text text="{i18n>notifWhenEnabled}"/>
+                                            </HBox>
+                                        </VBox>
+                                    </HBox>
+                                </CustomListItem>
+                            </items>
+                        </List>
+                    </content>
+                </Panel>
+                
+                <!-- Test Notification -->
+                <Panel headerText="{i18n>notifTestSection}" expandable="true">
+                    <content>
+                        <VBox class="sapUiSmallMargin">
+                            <Text text="{i18n>notifTestDesc}" class="sapUiSmallMarginBottom"/>
+                            <Button text="{i18n>notifSendTest}" 
+                                    press=".onSendTestNotification"
+                                    type="Emphasized"
+                                    enabled="{settingsModel>/emailEnabled}"/>
+                        </VBox>
+                    </content>
+                </Panel>
+                
+            </l:VerticalLayout>
+        </content>
+        
+        <footer>
+            <OverflowToolbar>
+                <ToolbarSpacer/>
+                <Button text="{i18n>btnSave}" type="Emphasized" press=".onSave"/>
+                <Button text="{i18n>btnCancel}" press=".onCancel"/>
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

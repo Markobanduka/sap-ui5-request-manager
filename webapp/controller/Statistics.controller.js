@@ -5,7 +5,7 @@ sap.ui.define([
 ], function(Controller, JSONModel, MessageToast) {
     "use strict";
 
-    return Controller.extend("ui5.requestmanagerapp.controller.Statistics", {
+    return Controller.extend("ui5.requestmanager.controller.Statistics", {
         onInit: function() {
             console.log("Statistics controller initialized");
             

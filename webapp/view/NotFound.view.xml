@@ -1,0 +1,12 @@
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    controllerName="ui5.requestmanager.controller.NotFound"
+    displayBlock="true">
+    <IllustratedMessage illustrationType="sapIllus-PageNotFound">
+        <additionalContent>
+            <Button icon="sap-icon://home" text="{i18n>goBack}" press="onNavBack"></Button>
+        </additionalContent>
+    </IllustratedMessage>
+    </mvc:View>

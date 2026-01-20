@@ -71,7 +71,10 @@
         "viewType": "XML",
         "path": "ui5.requestmanager.view",
         "async": true,
-        "viewPath": "ui5.requestmanager.view"
+        "viewPath": "ui5.requestmanager.view",
+        "bypassed": {
+          "target" : "notFound"
+        }
       },
       "routes": [
         {
@@ -98,6 +101,16 @@
           "pattern": "stats",
           "name": "stats",
           "target": "stats"
+        },
+        {
+          "pattern": "notifications",
+          "name": "notifications",
+          "target": "notifications"
+        },
+        {
+          "pattern": ":all*:",
+          "name": "notFound",
+          "target": "notFound"
         }
       ],
       "targets": {
@@ -122,6 +135,15 @@
           "viewName": "Statistics",
           "viewId": "Statistics",
           "transition": "fade"
+        },
+         "notifications": {
+          "viewName": "NotificationSettings",
+          "viewId": "NotificationSettings"
+        },
+        "notFound": {
+          "id": "notFound",
+          "name": "notFound",
+          "transition":"show"
         }
       }
     },
