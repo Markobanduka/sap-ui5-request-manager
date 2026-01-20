@@ -1,0 +1,44 @@
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    controllerName="ui5.requestmanager.controller.CreateRequest"
+    displayBlock="true">
+    
+    <Page title="{i18n>createPageTitle}" showNavButton="true" navButtonPress=".onNavBack">
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <Title text="{i18n>createFormTitle}" level="H2"/>
+                
+                <Label text="{i18n>labelCategory}" class="sapUiSmallMarginTop"/>
+                <Select id="categorySelect">
+                    <core:Item key="Hardware" text="{i18n>categoryHardware}"/>
+                    <core:Item key="Software" text="{i18n>categorySoftware}"/>
+                    <core:Item key="Access" text="{i18n>categoryAccess}"/>
+                    <core:Item key="Network" text="{i18n>categoryNetwork}"/>
+                </Select>
+                
+                <Label text="{i18n>labelPriority}" class="sapUiSmallMarginTop"/>
+                <Select id="prioritySelect">
+                    <core:Item key="Low" text="{i18n>priorityLow}"/>
+                    <core:Item key="Medium" text="{i18n>priorityMedium}"/>
+                    <core:Item key="High" text="{i18n>priorityHigh}"/>
+                </Select>
+                
+                <Label text="{i18n>labelDescription}" class="sapUiSmallMarginTop"/>
+                <TextArea id="descArea" rows="3" width="100%" 
+                          placeholder="{i18n>descriptionPlaceholder}"/>
+                
+                <Button text="{i18n>btnSubmit}" 
+                        type="Emphasized" 
+                        press=".onSubmit"
+                        class="sapUiSmallMarginTop"/>
+                
+                <Button text="{i18n>btnCancel}" 
+                        type="Transparent" 
+                        press=".onCancel"
+                        class="sapUiTinyMarginTop"/>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>
