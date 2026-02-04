@@ -1,8 +1,9 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "sap/m/MessageToast"
-], function(Controller, JSONModel, MessageToast) {
+    "sap/m/MessageToast",
+    "ui5/requestmanager/formatter/formatter"
+], function(Controller, JSONModel, MessageToast, formatter) {
     "use strict";
 
     return Controller.extend("ui5.requestmanager.controller.Statistics", {
@@ -225,12 +226,6 @@ sap.ui.define([
             return colors[sCategory] || "None";
         },
 
-        formatPriorityState: function(sPriority) {
-            if (sPriority === "Critical") return "Error";
-            if (sPriority === "High") return "Error";
-            if (sPriority === "Medium") return "Warning";
-            if (sPriority === "Low") return "Success";
-            return "None";
-        }
+       formatter: formatter
     });
 });

@@ -306,7 +306,7 @@
                                                     <ObjectStatus text="{statsModel>priority}" 
                                                                 state="{
                                                                     path: 'statsModel>priority',
-                                                                    formatter: '.formatPriorityState'
+                                                                    formatter: '.formatter.priorityState'
                                                                 }"
                                                                 class="sapUiTinyMarginEnd"/>
                                                     <Text text="•" class="sapUiTinyMarginEnd"/>

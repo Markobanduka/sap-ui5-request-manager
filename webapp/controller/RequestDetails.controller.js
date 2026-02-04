@@ -2,8 +2,9 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/m/MessageBox",
     "sap/m/MessageToast",
-    "sap/ui/model/json/JSONModel"
-], function(Controller, MessageBox, MessageToast, JSONModel) {
+    "sap/ui/model/json/JSONModel",
+    "ui5/requestmanager/formatter/formatter"
+], function(Controller, MessageBox, MessageToast, JSONModel, formatter) {
     "use strict";
 
     return Controller.extend("ui5.requestmanager.controller.RequestDetails", {
@@ -159,19 +160,6 @@ sap.ui.define([
             }
         },
 
-        formatStatusState: function(sStatus) {
-            if (sStatus === "Open") return "Warning";
-            if (sStatus === "In Progress") return "Information";
-            if (sStatus === "Closed") return "Success";
-            return "None";
-        },
-
-        formatPriorityState: function(sPriority) {
-            if (sPriority === "Critical") return "Error";
-            if (sPriority === "High") return "Error";
-            if (sPriority === "Medium") return "Warning";
-            if (sPriority === "Low") return "Success";
-            return "None";
-        }
+       formatter:formatter
     });
 });

@@ -91,17 +91,17 @@
                                     text="{requestsModel>priority}"
                                     state="{
                                         path: 'requestsModel>priority',
-                                        formatter: '.formatPriorityState'
+                                        formatter: '.formatter.priorityState'
                                     }"
                                     icon="{
                                         path: 'requestsModel>priority',
-                                        formatter: '.formatPriorityIcon'
+                                        formatter: '.formatter.priorityIcon'
                                     }" />
                                 <ObjectStatus
                                     text="{requestsModel>status}"
                                     state="{
                                         path: 'requestsModel>status',
-                                        formatter: '.formatStatusState'
+                                        formatter: '.formatter.statusState'
                                     }" />
                                 <Text text="{requestsModel>createdOn}" />
                                 <l:HorizontalLayout>

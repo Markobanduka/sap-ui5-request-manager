@@ -4,8 +4,9 @@ sap.ui.define([
     "sap/ui/model/FilterOperator",
     "sap/m/MessageToast",
     "sap/ui/model/json/JSONModel",
-    "sap/m/MessageBox"
-], function(Controller, Filter, FilterOperator, MessageToast, JSONModel, MessageBox) {
+    "sap/m/MessageBox",
+    "ui5/requestmanager/formatter/formatter"
+], function(Controller, Filter, FilterOperator, MessageToast, JSONModel, MessageBox, formatter) {
     "use strict";
 
     return Controller.extend("ui5.requestmanager.controller.MyRequests", {
@@ -247,28 +248,8 @@ sap.ui.define([
             return aRequests.length + " request" + (aRequests.length !== 1 ? "s" : "");
         },
 
-        formatPriorityState: function(sPriority) {
-            if (sPriority === "Critical") return "Error";
-            if (sPriority === "High") return "Error";
-            if (sPriority === "Medium") return "Warning";
-            if (sPriority === "Low") return "Success";
-            return "None";
-        },
+        formatter:formatter,
 
-        formatPriorityIcon: function(sPriority) {
-            if (sPriority === "Critical") return "sap-icon://alert";
-            if (sPriority === "High") return "sap-icon://error";
-            if (sPriority === "Medium") return "sap-icon://warning";
-            if (sPriority === "Low") return "sap-icon://information";
-            return "";
-        },
-
-        formatStatusState: function(sStatus) {
-            if (sStatus === "Open") return "Warning";
-            if (sStatus === "In Progress") return "Information";
-            if (sStatus === "Closed") return "Success";
-            return "None";
-        },
 
         onAfterRendering: function() {
             console.log("MyRequests view rendered");
