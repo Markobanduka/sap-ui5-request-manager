@@ -48,7 +48,7 @@ sap.ui.define(
 
         // Get or create model
         const oComponent = this.getOwnerComponent();
-        const oRequestsModel = oComponent.getModel("requestsModel");
+        let oRequestsModel = oComponent.getModel("requestsModel");
 
         if (!oRequestsModel) {
           oRequestsModel = new JSONModel({ requests: [] });
